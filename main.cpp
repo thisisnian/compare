@@ -6,9 +6,15 @@
 
 using namespace std;
 
+bool checkIfFileExists (string);
+
+
+
+
 int main(int argc, char *argv[])
 {
     //check if there are two files for reading given from the user
+    
     if(argc != 3)
     {
         //if not, exit
@@ -20,18 +26,31 @@ int main(int argc, char *argv[])
     ifstream file1;
     ifstream file2;
     
-    char *filename1 = argv[1];
-    char *filename2 = argv[2];
+    string filename1 = argv[1];
+    string filename2 = argv[2];
+    
+    
     
     //open files binary for reading
-    file1.open(filename1, ios::binary | ios::in);
-    file2.open(filename2, ios::binary | ios::in);
+    file1.open(filename1.c_str());
+    file2.open(filename2.c_str());
+//    file1.open(filename1, ios::binary | ios::in);
+  //  file2.open(filename2, ios::binary | ios::in);
     
     //if we couldnt open one of the two files
     //tell the user and exit
+    
+    
     if(!file1.is_open())
     {
-        cout << filename1 << " could not be opened!" << endl;
+    	if(checkIfFileExists(filename1)==false)
+    	{
+    		cout << "File " << filename1 << " does not exist!" << endl;
+    	}
+		else
+		{
+        	cout << filename1 << " could not be opened!" << endl;
+    	}
         if(file2.is_open())
         {
             file2.close();
@@ -39,9 +58,20 @@ int main(int argc, char *argv[])
         return -1;
     }
     if(!file2.is_open())
-    {
-        cout << filename2 << " could not be opened!" << endl;
-        file1.close();
+    {	
+    	if(checkIfFileExists(filename2)==false)
+    	{
+    		cout << "File " << filename2 << " does not exist!" << endl;
+    	}
+    	else
+    	{
+        	cout << filename2 << " could not be opened!" << endl;
+    	}
+    	
+    	if(file2.is_open()) //for now we'll leave it in a if statement, rewrite these two into one function...
+        {
+            file2.close();
+        }
         return -1;
     }
     
@@ -95,3 +125,15 @@ int main(int argc, char *argv[])
     file2.close();
     return 1;
 }
+
+bool checkIfFileExists (string filename)
+{
+	ifstream ifile (filename.c_str());
+
+	if (ifile)
+		return true;
+	else
+		return false;
+}
+
+
