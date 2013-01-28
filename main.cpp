@@ -7,8 +7,7 @@
 using namespace std;
 
 bool checkIfFileExists (string);
-
-
+bool checkIfFileReadable(ifstream&, ifstream&, string);
 
 
 int main(int argc, char *argv[])
@@ -40,41 +39,8 @@ int main(int argc, char *argv[])
     //if we couldnt open one of the two files
     //tell the user and exit
     
-    
-    if(!file1.is_open())
-    {
-    	if(checkIfFileExists(filename1)==false)
-    	{
-    		cout << "File " << filename1 << " does not exist!" << endl;
-    	}
-		else
-		{
-        	cout << filename1 << " could not be opened!" << endl;
-    	}
-        if(file2.is_open())
-        {
-            file2.close();
-        }
-        return -1;
-    }
-    if(!file2.is_open())
-    {	
-    	if(checkIfFileExists(filename2)==false)
-    	{
-    		cout << "File " << filename2 << " does not exist!" << endl;
-    	}
-    	else
-    	{
-        	cout << filename2 << " could not be opened!" << endl;
-    	}
-    	
-    	if(file2.is_open()) //for now we'll leave it in a if statement, rewrite these two into one function...
-        {
-            file2.close();
-        }
-        return -1;
-    }
-    
+    checkIfFileReadable(file1,file2,filename1);
+	checkIfFileReadable(file2,file1,filename1);    
     
     //find out the size of the two files
     streampos sizefile1 = file1.tellg();
@@ -124,6 +90,27 @@ int main(int argc, char *argv[])
     file1.close();
     file2.close();
     return 1;
+}
+
+bool checkIfFileReadable (ifstream& iFile1,ifstream& iFile2, string filename)
+{
+	if (!iFile1.is_open())
+	{
+		if(checkIfFileExists(filename)==false)
+    	{
+    		cout << "File " << filename << " does not exist!" << endl;
+    	}
+		else
+		{
+        	cout << filename << " could not be opened!" << endl;
+    	}
+        if(iFile2.is_open())
+        {
+            iFile2.close();
+        }
+        return -1;
+	}
+	
 }
 
 bool checkIfFileExists (string filename)
