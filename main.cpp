@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
     //tell the user and exit
     
     checkIfFileReadable(file1,file2,filename1);
-	checkIfFileReadable(file2,file1,filename1);    
+	checkIfFileReadable(file2,file1,filename2);    
     
     //find out the size of the two files
     streampos sizefile1 = file1.tellg();
