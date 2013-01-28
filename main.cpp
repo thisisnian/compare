@@ -7,7 +7,7 @@
 using namespace std;
 
 bool checkIfFileExists (string);
-bool checkIfFileReadable(ifstream&, ifstream&, string);
+int checkIfFileReadable(ifstream&, ifstream&, string);
 
 
 int main(int argc, char *argv[])
@@ -92,7 +92,7 @@ int main(int argc, char *argv[])
     return 1;
 }
 
-bool checkIfFileReadable (ifstream& iFile1,ifstream& iFile2, string filename)
+int checkIfFileReadable (ifstream& iFile1,ifstream& iFile2, string filename)
 {
 	if (!iFile1.is_open())
 	{
